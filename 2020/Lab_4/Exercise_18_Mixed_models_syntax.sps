@@ -2,75 +2,84 @@
 
 DATASET ACTIVATE DataSet3.
 * plot with one regression line.
-GGRAPH
-  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class MISSING=LISTWISE 
-    REPORTMISSING=NO
-  /GRAPHSPEC SOURCE=INLINE.
-BEGIN GPL
-  SOURCE: s=userSource(id("graphdataset"))
-  DATA: weight=col(source(s), name("weight"))
-  DATA: sandwich_taken=col(source(s), name("sandwich_taken"))
-  DATA: class=col(source(s), name("class"), unit.category())
-  GUIDE: axis(dim(1), label("weight"))
-  GUIDE: axis(dim(2), label("sandwich_taken"))
-  GUIDE: legend(aesthetic(aesthetic.color.exterior), label("class"))
-  ELEMENT: point(position(weight*sandwich_taken), color.exterior(class))
-  ELEMENT: line(position(smooth.linear(weight*sandwich_taken)))
+GGRAPH 
+  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class_rec MISSING=LISTWISE 
+    REPORTMISSING=NO 
+  /GRAPHSPEC SOURCE=INLINE 
+  /FITLINE TOTAL=NO SUBGROUP=NO. 
+BEGIN GPL 
+  SOURCE: s=userSource(id("graphdataset")) 
+  DATA: weight=col(source(s), name("weight")) 
+  DATA: sandwich_taken=col(source(s), name("sandwich_taken")) 
+  DATA: class_rec=col(source(s), name("class_rec"), unit.category()) 
+  GUIDE: axis(dim(1), label("weight")) 
+  GUIDE: axis(dim(2), label("sandwich_taken")) 
+  GUIDE: legend(aesthetic(aesthetic.color.interior), label("class_rec")) 
+  GUIDE: text.title(label("Grouped Scatter of sandwich_taken by weight by class_rec")) 
+  ELEMENT: point(position(weight*sandwich_taken), color.interior(class_rec)) 
+ELEMENT: line(position(smooth.linear(weight*sandwich_taken)))
 END GPL.
 
+
 * Plot with one line for each class.
-GGRAPH
-  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class MISSING=LISTWISE 
-    REPORTMISSING=NO
-  /GRAPHSPEC SOURCE=INLINE.
-BEGIN GPL
-  SOURCE: s=userSource(id("graphdataset"))
-  DATA: weight=col(source(s), name("weight"))
-  DATA: sandwich_taken=col(source(s), name("sandwich_taken"))
-  DATA: class=col(source(s), name("class"), unit.category())
-  GUIDE: axis(dim(1), label("weight"))
-  GUIDE: axis(dim(2), label("sandwich_taken"))
-  GUIDE: legend(aesthetic(aesthetic.color.exterior), label("class"))
-  ELEMENT: point(position(weight*sandwich_taken), color.exterior(class))
-  ELEMENT: line(position(smooth.linear(weight*sandwich_taken)), split(class))
+GGRAPH 
+  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class_rec MISSING=LISTWISE 
+    REPORTMISSING=NO 
+  /GRAPHSPEC SOURCE=INLINE 
+  /FITLINE TOTAL=NO SUBGROUP=NO. 
+BEGIN GPL 
+  SOURCE: s=userSource(id("graphdataset")) 
+  DATA: weight=col(source(s), name("weight")) 
+  DATA: sandwich_taken=col(source(s), name("sandwich_taken")) 
+  DATA: class_rec=col(source(s), name("class_rec"), unit.category()) 
+  GUIDE: axis(dim(1), label("weight")) 
+  GUIDE: axis(dim(2), label("sandwich_taken")) 
+  GUIDE: legend(aesthetic(aesthetic.color.interior), label("class_rec")) 
+  GUIDE: text.title(label("Grouped Scatter of sandwich_taken by weight by class_rec")) 
+  ELEMENT: point(position(weight*sandwich_taken), color.interior(class_rec)) 
+  ELEMENT: line(position(smooth.linear(weight*sandwich_taken)), split(class_rec))
 END GPL.
 
 * Plot with one line for each class, extended x and y axis to see intercept.
-GGRAPH
-  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class MISSING=LISTWISE 
-    REPORTMISSING=NO
-  /GRAPHSPEC SOURCE=INLINE.
-BEGIN GPL
-  SOURCE: s=userSource(id("graphdataset"))
-  DATA: weight=col(source(s), name("weight"))
-  DATA: sandwich_taken=col(source(s), name("sandwich_taken"))
-  DATA: class=col(source(s), name("class"), unit.category())
-  GUIDE: axis(dim(1), label("weight"))
-  GUIDE: axis(dim(2), label("sandwich_taken"))
-  GUIDE: legend(aesthetic(aesthetic.color.exterior), label("class"))
+GGRAPH 
+  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class_rec MISSING=LISTWISE 
+    REPORTMISSING=NO 
+  /GRAPHSPEC SOURCE=INLINE 
+  /FITLINE TOTAL=NO SUBGROUP=NO. 
+BEGIN GPL 
+  SOURCE: s=userSource(id("graphdataset")) 
+  DATA: weight=col(source(s), name("weight")) 
+  DATA: sandwich_taken=col(source(s), name("sandwich_taken")) 
+  DATA: class_rec=col(source(s), name("class_rec"), unit.category()) 
+  GUIDE: axis(dim(1), label("weight")) 
+  GUIDE: axis(dim(2), label("sandwich_taken")) 
+  GUIDE: legend(aesthetic(aesthetic.color.interior), label("class_rec")) 
+  GUIDE: text.title(label("Grouped Scatter of sandwich_taken by weight by class_rec")) 
   SCALE: linear(dim(1), min(0)  )
   SCALE: linear(dim(2), max(30)  )
-  ELEMENT: point(position(weight*sandwich_taken), color.exterior(class))
-  ELEMENT: line(position(smooth.linear(weight*sandwich_taken)), split(class))
+  ELEMENT: point(position(weight*sandwich_taken), color.interior(class_rec)) 
+  ELEMENT: line(position(smooth.linear(weight*sandwich_taken)), split(class_rec))
 END GPL.
 
 * Same plot for Bully_slpoe dataset. 
-GGRAPH
-  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class MISSING=LISTWISE 
-    REPORTMISSING=NO
-  /GRAPHSPEC SOURCE=INLINE.
-BEGIN GPL
-  SOURCE: s=userSource(id("graphdataset"))
-  DATA: weight=col(source(s), name("weight"))
-  DATA: sandwich_taken=col(source(s), name("sandwich_taken"))
-  DATA: class=col(source(s), name("class"), unit.category())
-  GUIDE: axis(dim(1), label("weight"))
-  GUIDE: axis(dim(2), label("sandwich_taken"))
-  GUIDE: legend(aesthetic(aesthetic.color.exterior), label("class"))
+GGRAPH 
+  /GRAPHDATASET NAME="graphdataset" VARIABLES=weight sandwich_taken class_rec MISSING=LISTWISE 
+    REPORTMISSING=NO 
+  /GRAPHSPEC SOURCE=INLINE 
+  /FITLINE TOTAL=NO SUBGROUP=NO. 
+BEGIN GPL 
+  SOURCE: s=userSource(id("graphdataset")) 
+  DATA: weight=col(source(s), name("weight")) 
+  DATA: sandwich_taken=col(source(s), name("sandwich_taken")) 
+  DATA: class_rec=col(source(s), name("class_rec"), unit.category()) 
+  GUIDE: axis(dim(1), label("weight")) 
+  GUIDE: axis(dim(2), label("sandwich_taken")) 
+  GUIDE: legend(aesthetic(aesthetic.color.interior), label("class_rec")) 
+  GUIDE: text.title(label("Grouped Scatter of sandwich_taken by weight by class_rec")) 
   SCALE: linear(dim(1), min(0)  )
   SCALE: linear(dim(2), max(30)  )
-  ELEMENT: point(position(weight*sandwich_taken), color.exterior(class))
-  ELEMENT: line(position(smooth.linear(weight*sandwich_taken)), split(class))
+  ELEMENT: point(position(weight*sandwich_taken), color.interior(class_rec)) 
+  ELEMENT: line(position(smooth.linear(weight*sandwich_taken)), split(class_rec))
 END GPL.
 
 
