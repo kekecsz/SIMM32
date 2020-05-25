@@ -14,23 +14,23 @@ VARSTOCASES
 DESCRIPTIVES VARIABLES=time 
   /STATISTICS=MEAN STDDEV MIN MAX.
 
-COMPUTE centered_time=time-4. 
+COMPUTE time_centered=time-4. 
 EXECUTE.
 
 
 *Create a new variable which contains the squared value of the centered time. 
-COMPUTE centered_time_sq=centered_time*centered_time.
+COMPUTE time_centered_sq=time_centered*time_centered.
 EXECUTE.
 
 *Build the mixed model with random intercept
 
-MIXED wound_healing WITH distance_window south_wing centered_time centered_time_sq
+MIXED wound_healing WITH distance_window south_wing time_centered time_centered_sq
   /CRITERIA=DFMETHOD(SATTERTHWAITE) CIN(95) MXITER(100) MXSTEP(10) SCORING(1) 
     SINGULAR(0.000000000001) HCONVERGE(0, ABSOLUTE) LCONVERGE(0, ABSOLUTE) PCONVERGE(0.000001, ABSOLUTE)    
-  /FIXED=distance_window south_wing centered_time centered_time_sq | SSTYPE(3)
+  /FIXED=distance_window south_wing time_centered time_centered_sq | SSTYPE(3)
   /METHOD=REML
   /PRINT=CORB  SOLUTION
-  /RANDOM=INTERCEPT | SUBJECT(ID) COVTYPE(VC)
+  /RANDOM=INTERCEPT | SUBJECT(ID) COVTYPE(VC) SOLUTION
   /SAVE=RESID PRED.
 
 *Examine outliers.
@@ -91,36 +91,36 @@ BEGIN GPL
 END GPL.
 
 GGRAPH
-  /GRAPHDATASET NAME="graphdataset" VARIABLES=centered_time RESID_1 MISSING=LISTWISE 
+  /GRAPHDATASET NAME="graphdataset" VARIABLES=time_centered RESID_1 MISSING=LISTWISE 
     REPORTMISSING=NO
   /GRAPHSPEC SOURCE=INLINE.
 BEGIN GPL
   SOURCE: s=userSource(id("graphdataset"))
-  DATA: centered_time=col(source(s), name("centered_time"))
+  DATA: time_centered=col(source(s), name("time_centered"))
   DATA: RESID_1=col(source(s), name("RESID_1"))
-  GUIDE: axis(dim(1), label("centered_time"))
+  GUIDE: axis(dim(1), label("time_centered"))
   GUIDE: axis(dim(2), label("Residuals"))
-  ELEMENT: point(position(centered_time*RESID_1))
+  ELEMENT: point(position(time_centered*RESID_1))
 END GPL.
 
 GGRAPH
-  /GRAPHDATASET NAME="graphdataset" VARIABLES=centered_time_sq RESID_1 MISSING=LISTWISE 
+  /GRAPHDATASET NAME="graphdataset" VARIABLES=time_centered_sq RESID_1 MISSING=LISTWISE 
     REPORTMISSING=NO
   /GRAPHSPEC SOURCE=INLINE.
 BEGIN GPL
   SOURCE: s=userSource(id("graphdataset"))
-  DATA: centered_time_sq=col(source(s), name("centered_time_sq"), unit.category())
+  DATA: time_centered_sq=col(source(s), name("time_centered_sq"), unit.category())
   DATA: RESID_1=col(source(s), name("RESID_1"))
-  GUIDE: axis(dim(1), label("centered_time_sq"))
+  GUIDE: axis(dim(1), label("time_centered_sq"))
   GUIDE: axis(dim(2), label("Residuals"))
   SCALE: linear(dim(2), include(0))
-  ELEMENT: point(position(centered_time_sq*RESID_1))
+  ELEMENT: point(position(time_centered_sq*RESID_1))
 END GPL.
 
 
 *investigate multicollinearity using the correlation matrix of all predictors.
 CORRELATIONS
-  /VARIABLES=south_wing centered_time centered_time_sq distance_window
+  /VARIABLES=south_wing time_centered time_centered_sq distance_window
   /PRINT=TWOTAIL NOSIG
   /MISSING=PAIRWISE.
 
